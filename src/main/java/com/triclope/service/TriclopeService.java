@@ -1,7 +1,7 @@
 package com.triclope.service;
 
-import com.triclope.dto.TriClopeDto;
-import com.triclope.model.TriClope;
+import com.triclope.dto.TriclopeDto;
+import com.triclope.model.TriclopeDb;
 import com.triclope.repository.TriclopeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,10 @@ public class TriclopeService {
     @Autowired
     private TriclopeRepository repository;
 
-    public List<TriClopeDto> get() {
-        List<TriClope> triClopesDb = repository.findAll();
-        List<TriClopeDto> dtos = triClopesDb.stream()
-                                        .map(db -> new TriClopeDto(db.getId(), db.getName(), db.getCreationDate()))
-                                         .toList();
-        return dtos;
+    public List<TriclopeDto> get() {
+        List<TriclopeDb> triClopeDb = repository.findAll();
+        return triClopeDb.stream()
+                            .map(db -> new TriclopeDto(db.getId(), db.getName(), db.getCreationDate()))
+                             .toList();
     }
 }
