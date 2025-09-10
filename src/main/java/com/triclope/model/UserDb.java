@@ -30,6 +30,12 @@ public class UserDb {
     @Size(max = 50)
     private String lastName;
 
+    @Column(name = "EMAIL", nullable = false, unique = true)
+    @NotBlank
+    private String email;
+
+
+
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TriclopeDb> createdTriclopes = new ArrayList<>();
 
@@ -86,4 +92,14 @@ public class UserDb {
     public void setTakenParticipation(List<ParticipationDb> takenParticipation) {
         this.takenParticipation = takenParticipation;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
 }

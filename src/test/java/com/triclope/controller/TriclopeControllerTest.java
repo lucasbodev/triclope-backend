@@ -33,8 +33,8 @@ class TriclopeControllerTest {
         // Given
         UUID triclopeId = UUID.fromString("550e8400-e29b-41d4-a716-446655440101");
         List<UserDto> expectedUsers = Arrays.asList(
-                new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440001"), "John", "Doe"),
-                new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440002"), "Jane", "Smith")
+                new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440001"), "John", "Doe", "john.doe@example.com"),
+                new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440002"), "Jane", "Smith", "jane.smith@example.com")
         );
         
         when(triclopeService.getUsersByTriclopeId(triclopeId)).thenReturn(expectedUsers);

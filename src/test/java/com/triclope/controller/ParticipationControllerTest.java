@@ -31,8 +31,8 @@ class ParticipationControllerTest {
     void getParticipationsByTriclopeId_ShouldReturnParticipations() throws Exception {
         // Given
         UUID triclopeId = UUID.fromString("550e8400-e29b-41d4-a716-446655440101");
-        UserDto giver = new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440001"), "John", "Doe");
-        UserDto taker = new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440002"), "Jane", "Smith");
+        UserDto giver = new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440001"), "John", "Doe", "john.doe@example.com");
+        UserDto taker = new UserDto(UUID.fromString("550e8400-e29b-41d4-a716-446655440002"), "Jane", "Smith", "jane.smith@example.com");
         
         List<ParticipationDto> expectedParticipations = Arrays.asList(
                 new ParticipationDto(
