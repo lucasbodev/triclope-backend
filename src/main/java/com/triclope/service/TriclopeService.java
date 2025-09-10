@@ -44,13 +44,12 @@ public class TriclopeService {
     }
 
     @Transactional
-    public TriclopeDto create(final TriclopeCreationRequest request) {
+    public TriclopeDto create(final TriclopeCreationRequest request, String connectedUserId) {
         TriclopeDb toSave = this.mapper.toCreateDb(request);
-        UserDb userDb = userRepository.findById(request.createdBy()).orElseThrow();
+        UserDb userDb = userRepository.findById(UUID.fromString(connectedUserId)).orElseThrow();
         toSave.setCreatedBy(userDb);
         toSave.getMembers().add(userDb);
         
-        // Définir explicitement la date de création si elle n'est pas déjà définie
         if (toSave.getCreationDate() == null) {
             toSave.setCreationDate(LocalDateTime.now());
         }

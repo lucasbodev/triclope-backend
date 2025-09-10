@@ -36,11 +36,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             .build();
     }
 
-    public boolean authenticate(String username, String rawPassword) {
+    public AuthUser authenticate(String username, String rawPassword) {
         return authUserRepository.findByUsername(username)
             .map(authUser -> {
-                return passwordEncoder.matches(rawPassword, authUser.getPassword());
+                if (passwordEncoder.matches(rawPassword, authUser.getPassword())) {
+                    return authUser;
+                }
+                throw new RuntimeException("Invalid credentials");
             })
-            .orElse(false);
+            .orElseThrow(() -> new RuntimeException());
     }
 }

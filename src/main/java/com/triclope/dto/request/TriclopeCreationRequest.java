@@ -8,15 +8,13 @@ import java.util.UUID;
 
 public record TriclopeCreationRequest(
         @NotBlank @Size(max = 100) String name, 
-        byte[] logo, 
-        @NotNull UUID createdBy
+        byte[] logo
 ) {
 
     @Override
     public String toString() {
         return "TriclopeCreationRequest{" +
                 "name='" + name + '\'' +
-                ", createdBy='" + createdBy + '\'' +
                 '}';
     }
 }

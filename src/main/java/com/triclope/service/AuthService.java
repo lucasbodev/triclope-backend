@@ -1,5 +1,6 @@
 package com.triclope.service;
 
+import com.triclope.model.AuthUser;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,8 +15,9 @@ public class AuthService {
     }
 
     public String authenticate(String username, String password) {
-        if (userDetailsService.authenticate(username, password)) {
-            return jwtService.generateToken(username);
+        AuthUser authenticate = userDetailsService.authenticate(username, password);
+        if (authenticate != null) {
+            return jwtService.generateToken(authenticate);
         }
         throw new RuntimeException("Invalid credentials");
     }

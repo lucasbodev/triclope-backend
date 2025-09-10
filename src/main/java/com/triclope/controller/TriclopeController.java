@@ -1,5 +1,6 @@
 package com.triclope.controller;
 
+import com.triclope.dto.business.TriclopePrincipal;
 import com.triclope.dto.request.TriclopeCreationRequest;
 import com.triclope.dto.request.TriclopeUpdateRequest;
 import com.triclope.dto.response.ParticipationDto;
@@ -12,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,9 +45,9 @@ public class TriclopeController {
     }
 
     @PostMapping
-    public TriclopeDto create(@RequestBody TriclopeCreationRequest request) {
+    public TriclopeDto create(@RequestBody TriclopeCreationRequest request, @AuthenticationPrincipal TriclopePrincipal user) {
         logger.info("A request to create a new triclope was made {}", request.toString());
-        return service.create(request);
+        return service.create(request, user.getUserId());
     }
 
     @PutMapping
