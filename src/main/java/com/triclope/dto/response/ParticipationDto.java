@@ -1,4 +1,4 @@
-package com.triclope.dto;
+package com.triclope.dto.response;
 
 
 

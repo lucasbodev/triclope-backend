@@ -1,6 +1,6 @@
 package com.triclope.controller;
 
-import com.triclope.dto.ParticipationDto;
+import com.triclope.dto.response.ParticipationDto;
 import com.triclope.service.ParticipationService;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;

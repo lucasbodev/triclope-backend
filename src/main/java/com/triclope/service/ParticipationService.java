@@ -1,6 +1,6 @@
 package com.triclope.service;
 
-import com.triclope.dto.ParticipationDto;
+import com.triclope.dto.response.ParticipationDto;
 import com.triclope.repository.ParticipantRepository;
 import org.springframework.stereotype.Service;
 

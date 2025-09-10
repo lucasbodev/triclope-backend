@@ -1,16 +1,15 @@
 package com.triclope.controller;
 
-import com.triclope.dto.ParticipationDto;
-import com.triclope.dto.TriclopeDto;
+import com.triclope.dto.request.TriclopeCreationRequest;
+import com.triclope.dto.request.TriclopeUpdateRequest;
+import com.triclope.dto.response.ParticipationDto;
+import com.triclope.dto.response.TriclopeDto;
 import com.triclope.service.TriclopeService;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,19 +23,31 @@ public class TriclopeController {
     private TriclopeService service;
 
     @GetMapping
-    public List<TriclopeDto> get () {
-        logger.info("A request to retrieve all triclopes was made");
+    public List<TriclopeDto> get() {
+        logger.info("A request to retrieve all triclope was made");
         return service.get();
     }
 
     @GetMapping("/user/{userId}")
-    public List<TriclopeDto> getByUserId (@PathVariable String userId ) {
+    public List<TriclopeDto> getByUserId(@PathVariable final String userId) {
         logger.info("A request to get all participation for a user with user id: {} was made", userId);
-        throw new NotImplementedException();
+        return service.getByUserId(userId);
+    }
+
+    @PostMapping
+    public TriclopeDto create(@RequestBody TriclopeCreationRequest request) {
+        logger.info("A request to create a new triclope was made {}", request.toString());
+        return service.create(request);
+    }
+
+    @PutMapping
+    public TriclopeDto update(@RequestBody TriclopeUpdateRequest request) {
+        logger.info("A request to edit a triclope was made {}", request.toString());
+        return service.update(request);
     }
 
     @GetMapping("/{triclopeId}/user")
-    public List<TriclopeDto> getUsersByTriclopeId (@PathVariable String triclopeId ) {
+    public List<TriclopeDto> getUsersByTriclopeId(@PathVariable final String triclopeId) {
         logger.info("A request to get all users for a triclope: {} was made", triclopeId);
         throw new NotImplementedException();
     }

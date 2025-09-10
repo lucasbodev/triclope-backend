@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,6 +58,9 @@ public class TriclopeDb {
     }
 
     public List<UserDb> getMembers() {
+        if (members == null) {
+            return new ArrayList<>();
+        }
         return members;
     }
 
@@ -78,6 +82,14 @@ public class TriclopeDb {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public UserDb getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UserDb createdBy) {
+        this.createdBy = createdBy;
     }
 
 //    public byte[] getLogo() {
