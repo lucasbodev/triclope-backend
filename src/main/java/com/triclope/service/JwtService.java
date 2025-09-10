@@ -1,10 +1,8 @@
 package com.triclope.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
@@ -19,7 +17,7 @@ import java.time.temporal.ChronoUnit;
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret:mySecretKey}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
     @Value("${jwt.expiration:86400}")
@@ -29,11 +27,6 @@ public class JwtService {
 
     private JwtEncoder getJwtEncoder() {
         if (jwtEncoder == null) {
-            System.out.println("=== JWT ENCODER DEBUG ===");
-            System.out.println("JWT Secret: " + jwtSecret);
-            System.out.println("JWT Expiration: " + jwtExpiration);
-            System.out.println("========================");
-            
             SecretKeySpec secretKey = new SecretKeySpec(
                 jwtSecret.getBytes(StandardCharsets.UTF_8), 
                 "HmacSHA256"
@@ -49,13 +42,12 @@ public class JwtService {
         
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuer("triclope")
-            .issuedAt(now)
             .expiresAt(now.plus(jwtExpiration, ChronoUnit.SECONDS))
             .subject(username)
             .claim("scope", "read write")
             .build();
-
-        return getJwtEncoder().encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
+        return getJwtEncoder().encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
 
     public String generateRefreshToken(String username) {

@@ -4,6 +4,7 @@ import com.triclope.model.AuthUser;
 import com.triclope.model.UserDb;
 import com.triclope.repository.AuthUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

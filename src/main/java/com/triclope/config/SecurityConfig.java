@@ -46,9 +46,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        System.out.println("=== JWT DECODER DEBUG ===");
         System.out.println("JWT Secret: " + jwtSecret);
-        System.out.println("========================");
         
         SecretKeySpec secretKey = new SecretKeySpec(
             jwtSecret.getBytes(StandardCharsets.UTF_8), 

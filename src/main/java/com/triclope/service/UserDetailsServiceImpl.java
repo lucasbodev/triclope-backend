@@ -39,14 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public boolean authenticate(String username, String rawPassword) {
         return authUserRepository.findByUsername(username)
             .map(authUser -> {
-                System.out.println("=== AUTHENTICATION DEBUG ===");
-                System.out.println("Username: " + username);
-                System.out.println("Raw password: " + rawPassword);
-                System.out.println("Stored hash: " + authUser.getPassword());
-                boolean matches = passwordEncoder.matches(rawPassword, authUser.getPassword());
-                System.out.println("Password matches: " + matches);
-                System.out.println("============================");
-                return matches;
+                return passwordEncoder.matches(rawPassword, authUser.getPassword());
             })
             .orElse(false);
     }
