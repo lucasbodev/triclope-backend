@@ -2,8 +2,15 @@ package com.triclope.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public record TriclopeCreationRequest(@NotBlank String name, @NotNull byte[] logo, @NotBlank String createdBy) {
+import java.util.UUID;
+
+public record TriclopeCreationRequest(
+        @NotBlank @Size(max = 100) String name, 
+        byte[] logo, 
+        @NotNull UUID createdBy
+) {
 
     @Override
     public String toString() {

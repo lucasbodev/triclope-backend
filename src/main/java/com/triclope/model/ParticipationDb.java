@@ -1,34 +1,50 @@
 package com.triclope.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
-
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "PARTICIPATION")
+@Table(name = "PARTICIPATION", indexes = {
+    @Index(name = "idx_participation_triclope", columnList = "triclope_id"),
+    @Index(name = "idx_participation_giver", columnList = "giver_id"),
+    @Index(name = "idx_participation_taker", columnList = "taker_id"),
+    @Index(name = "idx_participation_created_at", columnList = "created_at")
+})
 public class ParticipationDb {
 
     @Id
     @UuidGenerator
+    @Column(name = "ID")
     private UUID id;
 
+    @Column(name = "QUANTITY", nullable = false)
+    @NotNull
+    @Positive
     private int quantity;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "triclope_id", nullable = false)
+    @NotNull
     private TriclopeDb triclope;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "giver_id", nullable = false)
+    @NotNull
     private UserDb giver;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "taker_id", nullable = false)
+    @NotNull
     private UserDb taker;
 
 

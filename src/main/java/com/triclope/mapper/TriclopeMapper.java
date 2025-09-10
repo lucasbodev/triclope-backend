@@ -9,19 +9,21 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper
+@Mapper 
 public abstract class TriclopeMapper {
 
     @Mapping( target = "members", ignore = true)
     @Mapping( target = "id", ignore = true)
     @Mapping( target = "creationDate", ignore = true)
     @Mapping( target = "participations", ignore = true)
+    @Mapping( target = "createdBy", ignore = true)
     public abstract TriclopeDb toCreateDb(TriclopeCreationRequest dto);
 
     @Mapping( target = "members", ignore = true)
     @Mapping( target = "id", ignore = true)
     @Mapping( target = "creationDate", ignore = true)
     @Mapping( target = "participations", ignore = true)
+    @Mapping( target = "createdBy", ignore = true)
     public abstract TriclopeDb toUpdateDb (TriclopeUpdateRequest dto);
 
     public abstract TriclopeDto toDto(TriclopeDb db);

@@ -4,6 +4,8 @@ import com.triclope.dto.request.TriclopeCreationRequest;
 import com.triclope.dto.request.TriclopeUpdateRequest;
 import com.triclope.dto.response.ParticipationDto;
 import com.triclope.dto.response.TriclopeDto;
+import com.triclope.dto.response.UserDto;
+import com.triclope.service.ParticipationService;
 import com.triclope.service.TriclopeService;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/triclope")
@@ -22,6 +25,9 @@ public class TriclopeController {
     @Autowired
     private TriclopeService service;
 
+    @Autowired
+    private ParticipationService participationService;
+
     @GetMapping
     public List<TriclopeDto> get() {
         logger.info("A request to retrieve all triclope was made");
@@ -29,7 +35,7 @@ public class TriclopeController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<TriclopeDto> getByUserId(@PathVariable final String userId) {
+    public List<TriclopeDto> getByUserId(@PathVariable final UUID userId) {
         logger.info("A request to get all participation for a user with user id: {} was made", userId);
         return service.getByUserId(userId);
     }
@@ -47,15 +53,15 @@ public class TriclopeController {
     }
 
     @GetMapping("/{triclopeId}/user")
-    public List<TriclopeDto> getUsersByTriclopeId(@PathVariable final String triclopeId) {
+    public List<UserDto> getUsersByTriclopeId(@PathVariable final UUID triclopeId) {
         logger.info("A request to get all users for a triclope: {} was made", triclopeId);
-        throw new NotImplementedException();
+        return service.getUsersByTriclopeId(triclopeId);
     }
 
     @GetMapping("/{triclopeId}/participation")
-    public ParticipationDto getParticipationByTriclope(@PathVariable final String triclopeId) {
+    public List<ParticipationDto> getParticipationByTriclope(@PathVariable final UUID triclopeId) {
         logger.info("A request to get all participation for a triclope: {} was made", triclopeId);
-        throw new NotImplementedException();
+        return participationService.getByTriclopeId(triclopeId);
     }
 
 }

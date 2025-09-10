@@ -1,39 +1,49 @@
 package com.triclope.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name = "TRICLOPE_USER")
+@Table(name = "TRICLOPE_USER", indexes = {
+    @Index(name = "idx_user_name", columnList = "first_name, last_name")
+})
 public class UserDb {
 
     @Id
     @UuidGenerator
-    @Column
-    private String id;
+    @Column(name = "ID")
+    private UUID id;
 
-    @Column(name = "FIRST_NAME")
+    @Column(name = "FIRST_NAME", nullable = false, length = 50)
+    @NotBlank
+    @Size(max = 50)
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "LAST_NAME", nullable = false, length = 50)
+    @NotBlank
+    @Size(max = 50)
     private String lastName;
 
-    @OneToMany(mappedBy = "createdBy")
-    private List<TriclopeDb> createdTriclopes;
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<TriclopeDb> createdTriclopes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "giver")
-    private List<ParticipationDb> givenParticipation;
+    @OneToMany(mappedBy = "giver", fetch = FetchType.LAZY)
+    private List<ParticipationDb> givenParticipation = new ArrayList<>();
 
-    @OneToMany(mappedBy = "taker")
-    private List<ParticipationDb> takenParticipation;
+    @OneToMany(mappedBy = "taker", fetch = FetchType.LAZY)
+    private List<ParticipationDb> takenParticipation = new ArrayList<>();
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
